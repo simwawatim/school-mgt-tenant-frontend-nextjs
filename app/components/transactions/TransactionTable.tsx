@@ -292,7 +292,7 @@ const TransactionTable = () => {
             <>
               <StatCard title="Total Transactions" value={totalTransactions} icon={FaExchangeAlt} color="indigo" />
               <StatCard title="Total Debits" value={`$${totalDebits.toLocaleString()}`} icon={FaMoneyBillWave} color="green" />
-              <StatCard title="Total Credits" value={`$${totalCredits.toLocaleString()}`} icon={FaMoneyBillWave} color="purple" />
+              <StatCard title="Total Credits" value={`$${totalCredits.toLocaleString()}`} icon={FaMoneyBillWave} color="green" />
             </>
           )}
         </div>
@@ -450,13 +450,21 @@ const TransactionTable = () => {
   );
 };
 
-// StatCard (same as before)
-const StatCard = ({ title, value, icon: Icon, color }: any) => {
-  const colorClasses = {
-    indigo: "bg-indigo-50 text-indigo-600",
-    green: "bg-green-50 text-green-600",
-    purple: "bg-purple-50 text-purple-600",
-  }[color] || "bg-gray-50 text-gray-600";
+// StatCard component (same as previous)
+type StatCardProps = {
+  title: string;
+  value: string | number;
+  icon: React.ElementType;
+  color: "indigo" | "green";
+};
+
+const StatCard = ({ title, value, icon: Icon, color }: StatCardProps) => {
+  const colorClasses =
+    {
+      indigo: "bg-indigo-50 text-indigo-600",
+      green: "bg-green-50 text-green-600",
+    }[color] || "bg-gray-50 text-gray-600";
+
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
       <div className="flex items-center justify-between">
@@ -464,7 +472,9 @@ const StatCard = ({ title, value, icon: Icon, color }: any) => {
           <p className="text-sm text-gray-500">{title}</p>
           <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
         </div>
-        <div className={`p-3 rounded-lg ${colorClasses}`}><Icon className="text-xl" /></div>
+        <div className={`p-3 rounded-lg ${colorClasses}`}>
+          <Icon className="text-xl" />
+        </div>
       </div>
     </div>
   );
