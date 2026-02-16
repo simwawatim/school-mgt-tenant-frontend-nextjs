@@ -287,7 +287,7 @@ const AccountTable = () => {
             <>
               <StatCard title="Total Accounts" value={totalAccounts} icon={FaWallet} color="indigo" />
               <StatCard title="Total Balance" value={`$${totalBalance.toLocaleString()}`} icon={FaMoneyBillWave} color="green" />
-              <StatCard title="Asset Accounts" value={assetAccounts} icon={FaWallet} color="purple" />
+              <StatCard title="Asset Accounts" value={assetAccounts} icon={FaWallet} color="green" />
             </>
           )}
         </div>
@@ -304,30 +304,30 @@ const AccountTable = () => {
                 <thead className="bg-gray-50">
                   <tr>
                     {tableHeaders.map(header => (
-                      <th key={header.key} className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort(header.key)}>
+                      <th key={header.key} className="px-6 py-4 text-black text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort(header.key)}>
                         <div className="flex items-center gap-1">
                           {header.label}
                           {sortField === header.key ? (sortDirection === "asc" ? <FaSortUp /> : <FaSortDown />) : <FaSort className="text-gray-400" />}
                         </div>
                       </th>
                     ))}
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Actions</th>
+                    <th className="px-6 py-4 text-black text-left text-xs font-semibold text-gray-700 uppercase">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {paginatedAccounts.length > 0 ? (
                     paginatedAccounts.map(acc => (
                       <tr key={acc.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 font-medium">{acc.accountName}</td>
-                        <td className="px-6 py-4 font-mono text-sm">{acc.accountNumber}</td>
-                        <td className="px-6 py-4">{acc.accountType}</td>
-                        <td className="px-6 py-4 text-right">${acc.balance.toLocaleString()}</td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 text-black font-medium">{acc.accountName}</td>
+                        <td className="px-6 py-4 text-black font-mono text-sm">{acc.accountNumber}</td>
+                        <td className="px-6 py-4 text-black">{acc.accountType}</td>
+                        <td className="px-6 py-4 text-black text-right">${acc.balance.toLocaleString()}</td>
+                        <td className="px-6 py-4 text-black">
                           <button onClick={() => toggleStatus(acc)} className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${acc.isActive ? "bg-green-100 text-green-800 border-green-200" : "bg-gray-100 text-gray-800 border-gray-200"}`}>
                             {acc.isActive ? "Active" : "Inactive"}
                           </button>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 text-black">
                           <div className="flex gap-2">
                             <button onClick={() => openModal(acc)} className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg"><FaEdit /></button>
                             <button onClick={() => handleDelete(acc)} className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg"><FaTrash /></button>
@@ -344,7 +344,7 @@ const AccountTable = () => {
 
             {/* Pagination (same as previous) */}
             {totalPages > 1 && (
-              <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="px-6 py-4 text-black border-t border-gray-200 bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="text-sm text-gray-700">
                   Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to {Math.min(currentPage * ITEMS_PER_PAGE, sortedAccounts.length)} of {sortedAccounts.length}
                 </div>
@@ -376,7 +376,7 @@ const AccountTable = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white px-6 py-4 border-b border-gray-200 rounded-t-xl flex justify-between items-center">
+            <div className="sticky top-0 bg-white px-6 py-4 text-black border-b border-gray-200 rounded-t-xl flex justify-between items-center">
               <div>
                 <h2 className="text-xl font-bold">{editAccount ? "Edit Account" : "Add New Account"}</h2>
                 <p className="text-gray-600 text-sm">{editAccount ? "Update account information" : "Enter account details"}</p>
@@ -413,7 +413,7 @@ const AccountTable = () => {
                 )}
               </div>
             </div>
-            <div className="sticky bottom-0 bg-white px-6 py-4 border-t border-gray-200 rounded-b-xl flex justify-between items-center">
+            <div className="sticky bottom-0 bg-white px-6 py-4 text-black border-t border-gray-200 rounded-b-xl flex justify-between items-center">
               {editAccount && (
                 <button onClick={() => handleDelete(editAccount)} className="px-5 py-2.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg flex items-center gap-2">
                   <FaTrash /> Delete
@@ -434,12 +434,20 @@ const AccountTable = () => {
 };
 
 // StatCard component (same as previous)
-const StatCard = ({ title, value, icon: Icon, color }: any) => {
-  const colorClasses = {
-    indigo: "bg-indigo-50 text-indigo-600",
-    green: "bg-green-50 text-green-600",
-    purple: "bg-purple-50 text-purple-600",
-  }[color] || "bg-gray-50 text-gray-600";
+type StatCardProps = {
+  title: string;
+  value: string | number;
+  icon: React.ElementType;
+  color: "indigo" | "green";
+};
+
+const StatCard = ({ title, value, icon: Icon, color }: StatCardProps) => {
+  const colorClasses =
+    {
+      indigo: "bg-indigo-50 text-indigo-600",
+      green: "bg-green-50 text-green-600",
+    }[color] || "bg-gray-50 text-gray-600";
+
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
       <div className="flex items-center justify-between">
@@ -447,10 +455,13 @@ const StatCard = ({ title, value, icon: Icon, color }: any) => {
           <p className="text-sm text-gray-500">{title}</p>
           <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
         </div>
-        <div className={`p-3 rounded-lg ${colorClasses}`}><Icon className="text-xl" /></div>
+        <div className={`p-3 rounded-lg ${colorClasses}`}>
+          <Icon className="text-xl" />
+        </div>
       </div>
     </div>
   );
 };
+
 
 export default AccountTable;

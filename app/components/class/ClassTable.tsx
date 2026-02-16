@@ -389,18 +389,18 @@ const ClassTable = () => {
                   {paginatedClasses.length > 0 ? (
                     paginatedClasses.map(cls => (
                       <tr key={cls.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 font-medium">{cls.name}</td>
-                        <td className="px-6 py-4">{cls.section}</td>
-                        <td className="px-6 py-4">{cls.subject}</td>
-                        <td className="px-6 py-4">{cls.teacher}</td>
-                        <td className="px-6 py-4">{cls.room}</td>
-                        <td className="px-6 py-4">{cls.capacity}</td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 font-medium text-black">{cls.name}</td>
+                        <td className="px-6 py-4 text-black">{cls.section}</td>
+                        <td className="px-6 py-4 text-black">{cls.subject}</td>
+                        <td className="px-6 py-4 text-black">{cls.teacher}</td>
+                        <td className="px-6 py-4 text-black">{cls.room}</td>
+                        <td className="px-6 py-4 text-black">{cls.capacity}</td>
+                        <td className="px-6 py-4 text-black">
                           <button onClick={() => toggleStatus(cls)} className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${cls.isActive ? "bg-green-100 text-green-800 border-green-200" : "bg-gray-100 text-gray-800 border-gray-200"}`}>
                             {cls.isActive ? "Active" : "Inactive"}
                           </button>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 text-black">
                           <div className="flex gap-2">
                             <button onClick={() => openModal(cls)} className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg"><FaEdit /></button>
                             <button onClick={() => handleDelete(cls)} className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg"><FaTrash /></button>

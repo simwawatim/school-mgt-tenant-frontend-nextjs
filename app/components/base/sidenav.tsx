@@ -22,6 +22,7 @@ import {
   FaBookOpen,
   FaBars,
   FaTimes,
+  FaSms,
 } from "react-icons/fa";
 import { MOCK_TENANT_INFO } from "./tenantSettings";
 
@@ -50,25 +51,21 @@ const SidebarComp = ({ isOpen, toggleSidebar }: SidebarProps) => {
   useEffect(() => setIsClient(true), []);
 
   const menuItems: MenuItem[] = useMemo(
-    () => [
-      { name: "Dashboard", icon: <FaTachometerAlt />, href: "/dashboard" },
-      { name: "Teachers", icon: <FaChalkboardTeacher />, href: "/teachers" },
-      { name: "Students", icon: <FaUser />, href: "/students" },
-      { name: "Classes", icon: <FaSchool />, href: "/classes" },
-      { name: "Subjects", icon: <FaBook />, href: "/subjects" },
-      { name: "Attendance", icon: <FaCalendarAlt />, href: "/attendance" },
-      { name: "Fees", icon: <FaMoneyBillWave />, href: "/fees" },
-      { name: "Exams", icon: <FaPencilAlt />, href: "/exams" },
-      { name: "Timetable", icon: <FaClock />, href: "/timetable" },
-      { name: "Library", icon: <FaBookOpen />, href: "/library" },
-      { name: "Transport", icon: <FaBus />, href: "/transport" },
-      { name: "Hostel", icon: <FaBed />, href: "/hostel" },
-      { name: "Announcements", icon: <FaBullhorn />, href: "/announcements" },
-      { name: "Results", icon: <FaChartLine />, href: "/results" },
-      { name: "Enrollment", icon: <FaUserGraduate />, href: "/enrollment" },
-    ],
-    []
-  );
+  () => [
+    { name: "Dashboard", icon: <FaTachometerAlt />, href: "/dashboard" },
+
+    { name: "Teachers", icon: <FaChalkboardTeacher />, href: "/teachers" },
+    { name: "Students", icon: <FaUserGraduate />, href: "/students" },
+    { name: "Classes", icon: <FaSchool />, href: "/classes" },
+    { name: "Subjects", icon: <FaBook />, href: "/subjects" },
+    { name: "Results", icon: <FaChartLine />, href: "/results" },
+    { name: "Accounts", icon: <FaChartLine />, href: "/accounts" },
+    { name: "Announcements", icon: <FaBullhorn />, href: "/announcements" },
+    { name: "SMS Notifications", icon: <FaSms />, href: "/sms" },
+  ],
+  []
+);
+
 
   const isActive = useCallback(
     (href: string) => {

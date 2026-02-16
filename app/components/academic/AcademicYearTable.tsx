@@ -6,7 +6,6 @@ import {
   FaSort, FaSortUp, FaSortDown, FaSpinner, FaCalendarAlt
 } from "react-icons/fa";
 import Swal from "sweetalert2";
-import { StatCard } from "@/components/StatCard";
 import {
   AcademicYear,
   fetchAcademicYears,
@@ -237,17 +236,6 @@ const AcademicYearTable = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          {isLoading ? (
-            Array.from({ length: 3 }).map((_, i) => <div key={i} className="bg-white p-4 rounded-xl animate-pulse h-24" />)
-          ) : (
-            <>
-              <StatCard title="Total" value={total} icon={FaCalendarAlt} color="indigo" />
-              <StatCard title="Active" value={active} icon={FaCalendarAlt} color="green" />
-              <StatCard title="Inactive" value={inactive} icon={FaCalendarAlt} color="yellow" />
-            </>
-          )}
-        </div>
       </div>
 
       {/* Table */}

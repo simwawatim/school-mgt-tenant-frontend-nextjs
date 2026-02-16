@@ -298,29 +298,29 @@ const AnnouncementTable = () => {
                 <thead className="bg-gray-50">
                   <tr>
                     {tableHeaders.map(header => (
-                      <th key={header.key} className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort(header.key)}>
+                      <th key={header.key} className="px-6 py-4 text-black text-left text-xs font-semibold text-gray-700 uppercase tracking-wider cursor-pointer hover:bg-gray-100" onClick={() => handleSort(header.key)}>
                         <div className="flex items-center gap-1">
                           {header.label}
                           {sortField === header.key ? (sortDirection === "asc" ? <FaSortUp /> : <FaSortDown />) : <FaSort className="text-gray-400" />}
                         </div>
                       </th>
                     ))}
-                    <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase">Actions</th>
+                    <th className="px-6 py-4 text-black text-left text-xs font-semibold text-gray-700 uppercase">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {paginatedAnnouncements.length > 0 ? (
                     paginatedAnnouncements.map(ann => (
                       <tr key={ann.id} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 font-medium">{ann.title}</td>
-                        <td className="px-6 py-4">{ann.target}</td>
-                        <td className="px-6 py-4">{new Date(ann.date).toLocaleDateString()}</td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 text-black font-medium">{ann.title}</td>
+                        <td className="px-6 py-4 text-black">{ann.target}</td>
+                        <td className="px-6 py-4 text-black">{new Date(ann.date).toLocaleDateString()}</td>
+                        <td className="px-6 py-4 text-black">
                           <button onClick={() => toggleStatus(ann)} className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${ann.isActive ? "bg-green-100 text-green-800 border-green-200" : "bg-gray-100 text-gray-800 border-gray-200"}`}>
                             {ann.isActive ? "Active" : "Inactive"}
                           </button>
                         </td>
-                        <td className="px-6 py-4">
+                        <td className="px-6 py-4 text-black">
                           <div className="flex gap-2">
                             <button onClick={() => openModal(ann)} className="p-2 text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg"><FaEdit /></button>
                             <button onClick={() => handleDelete(ann)} className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg"><FaTrash /></button>
@@ -337,7 +337,7 @@ const AnnouncementTable = () => {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div className="px-6 py-4 text-black border-t border-gray-200 bg-gray-50 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div className="text-sm text-gray-700">
                   Showing {(currentPage - 1) * ITEMS_PER_PAGE + 1} to {Math.min(currentPage * ITEMS_PER_PAGE, sortedAnnouncements.length)} of {sortedAnnouncements.length}
                 </div>
@@ -369,7 +369,7 @@ const AnnouncementTable = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white px-6 py-4 border-b border-gray-200 rounded-t-xl flex justify-between items-center">
+            <div className="sticky top-0 bg-white px-6 py-4 text-black border-b border-gray-200 rounded-t-xl flex justify-between items-center">
               <div>
                 <h2 className="text-xl font-bold">{editAnnouncement ? "Edit Announcement" : "Add New Announcement"}</h2>
                 <p className="text-gray-600 text-sm">{editAnnouncement ? "Update announcement information" : "Enter announcement details"}</p>
@@ -408,7 +408,7 @@ const AnnouncementTable = () => {
                 )}
               </div>
             </div>
-            <div className="sticky bottom-0 bg-white px-6 py-4 border-t border-gray-200 rounded-b-xl flex justify-between items-center">
+            <div className="sticky bottom-0 bg-white px-6 py-4 text-black border-t border-gray-200 rounded-b-xl flex justify-between items-center">
               {editAnnouncement && (
                 <button onClick={() => handleDelete(editAnnouncement)} className="px-5 py-2.5 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg flex items-center gap-2">
                   <FaTrash /> Delete
@@ -429,11 +429,20 @@ const AnnouncementTable = () => {
 };
 
 // StatCard (same as before)
-const StatCard = ({ title, value, icon: Icon, color }: any) => {
-  const colorClasses = {
-    indigo: "bg-indigo-50 text-indigo-600",
-    green: "bg-green-50 text-green-600",
-  }[color] || "bg-gray-50 text-gray-600";
+type StatCardProps = {
+  title: string;
+  value: string | number;
+  icon: React.ElementType;
+  color: "indigo" | "green";
+};
+
+const StatCard = ({ title, value, icon: Icon, color }: StatCardProps) => {
+  const colorClasses =
+    {
+      indigo: "bg-indigo-50 text-indigo-600",
+      green: "bg-green-50 text-green-600",
+    }[color] || "bg-gray-50 text-gray-600";
+
   return (
     <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200">
       <div className="flex items-center justify-between">
@@ -441,10 +450,13 @@ const StatCard = ({ title, value, icon: Icon, color }: any) => {
           <p className="text-sm text-gray-500">{title}</p>
           <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
         </div>
-        <div className={`p-3 rounded-lg ${colorClasses}`}><Icon className="text-xl" /></div>
+        <div className={`p-3 rounded-lg ${colorClasses}`}>
+          <Icon className="text-xl" />
+        </div>
       </div>
     </div>
   );
 };
+
 
 export default AnnouncementTable;
